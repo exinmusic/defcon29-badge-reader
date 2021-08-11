@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Win95.CSS</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+    <meta author="Alex B" />
+    <meta property="og:image" content="assets/preview.png" />
+
+    <link rel="shortcut icon" href="assets/icons/computer-3.png" type="image/png">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='win95.css') }}">
+
+</head>
+
+<body class="windows-scrollbar">
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"><h1>DEFCON 29 BADGE READER RESULTS</h1></div>
+
+    <div class="container" id="page-content">
+        <div class="card-deck mb-3 text-center">
+            <div class="card square mb-3">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal"><img src="{{ url_for('static', filename='icons/redpill.png') }}">&nbsp;&nbsp;Red Pilled</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{pill_count}}<small class="text-muted">/{{row_count}}</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                </div>
+            </div>
+            <div class="card square mb-3">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal"><img src="{{ url_for('static', filename='icons/signal.png') }}">&nbsp;&nbsp;New Signal</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{signal_count}}<small class="text-muted">/{{row_count}}</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                </div>
+            </div>
+            <div class="card square mb-3">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal"><img src="{{ url_for('static', filename='icons/aliens.png') }}">&nbsp;&nbsp;Aliens!</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{alien_count}}<small class="text-muted">/{{row_count}}</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card square mb-3">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Reader Logs</h4>
+            </div>
+            <div class="card-body">
+                <table>
+                    <tr>
+                        <th>connected&nbsp;&nbsp;</th> 
+                        <th>signals shared&nbsp;&nbsp;</th>
+                        <th>highscore&nbsp;&nbsp;</th>
+                        <th>multiplayer highscore&nbsp;&nbsp;</th>
+                        <th>multiplayer games played&nbsp;&nbsp;</th>
+                        <th>most players in a game&nbsp;&nbsp;</th>
+                        <th>red pilled&nbsp;&nbsp;</th>
+                        <th>new signal&nbsp;&nbsp;</th>
+                        <th>aliens!&nbsp;&nbsp;</th>
+                    </tr>
+                    {% for score in scores %}
+                        {% if score.connected|int(-1) != -1 %}
+                            <tr>
+                                <td>{{score.connected}}</td>
+                                <td>{{score.signal}}</td>
+                                <td>{{score.gamestats.highscore}}</td>
+                                <td>{{score.gamestats['m-highscore']}}</td>
+                                <td>{{score.gamestats['m-played']}}</td>
+                                <td>{{score.gamestats['m-longest']}}</td>
+                                {% if score.ctf.redpill %}
+                                    <td><img src="{{ url_for('static', filename='icons/redpill.png') }}"></td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                                {% if score.ctf.newsignal %}
+                                    <td><img src="{{ url_for('static', filename='icons/signal.png') }}"></td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                                {% if score.ctf.aliens %}
+                                    <td><img src="{{ url_for('static', filename='icons/aliens.png') }}"></td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Footer -->
+    <footer class="taskbar">
+        <div class="row" style="margin-right: 0px;">
+            <div class="col-8">
+                <a href="https://github.com/AlexBSoft/win95.css" class="btn start-button"><img src="{{ url_for('static', filename='icons/directory_folder_options-5.png') }}" class="icon-16"> GitHub</a>
+            </div>
+            <div class="col-4 time">All was data collected by XN, HatChan, and Zebbler onsite at DEFCON29 via the official badge reader.</div>
+        </div>
+
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+
+</html>
